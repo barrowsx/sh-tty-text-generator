@@ -1,7 +1,5 @@
 require 'pry'
-
-file = File.open("History of Gaming.txt", "r")
-contents = file.read.downcase
+require 'to_words'
 
 def shitty_text_maker(text_to_shittify)
   working_string = text_to_shittify.downcase
@@ -9,6 +7,7 @@ def shitty_text_maker(text_to_shittify)
   characters_to_edit = ['?', '!']
   string_array = working_string.split('')
   array_to_return = []
+  number_array = []
   string_array.each do |character|
     alphabet_array.each do |letter|
       if character == letter
@@ -36,4 +35,28 @@ def shitty_text_maker(text_to_shittify)
   end
 end
 
-shitty_text_maker("shoot yourself with a coconut gun")
+def convert_numbers(string)
+  string_array = string.split('')
+  working_string = ''
+  number_array = []
+  number_word_array = []
+  string_to_return = ''
+  string_array.each do |character|
+    if character == '0' || character.to_i != 0
+      working_string << character
+    else
+      working_string << '.'
+    end
+  end
+  number_array = working_string.split('.')
+  number_array.reject!{ |element| element.empty? }
+  number_array.each do |num|
+    number_word_array << num.to_words.downcase
+    string_to_return = string.sub(num, num.to_words.downcase)
+  end
+  string_to_return
+end
+
+puts "Enter phrase you want to shittify:"
+shittify = gets.chomp
+shitty_text_maker(convert_numbers(shittify))
