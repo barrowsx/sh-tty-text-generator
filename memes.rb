@@ -54,7 +54,11 @@ def convert_numbers(string)
     number_word_array << num.to_words.downcase
     string_to_return = string.sub(num, num.to_words.downcase)
   end
-  string_to_return
+  if string_to_return == ''
+    string
+  else
+    string_to_return
+  end
 end
 
 puts "Enter phrase you want to shittify:"
